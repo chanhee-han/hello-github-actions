@@ -1,0 +1,33 @@
+# ssh example
+# https://docs.gitlab.com/ee/ci/examples/deployment/composer-npm-deploy.html
+
+image: ubuntu:20.04
+
+before_script:
+  - apt-get update
+  - 'which ssh-agent || apt-get install openssh-client -y'
+  - mkdir -p ~/.ssh
+  - eval $(ssh-agent -s)
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+deploy-staging:
+  stage: deploy
+  script:
+    - echo "staging, This job deploys something from the $CI_COMMIT_BRANCH branch."
+    - ssh-add <(echo "$STAGING_PRIVATE_KEY")
+    - ssh -p22 test@192.168.33.14 "mkdir -p test"
+    - ssh -p22 test@192.168.33.14 "date ; touch a.txt"
+    - scp -P22 * test@192.168.33.14:test/
+    - scp -P22 index.html test@192.168.33.14:/var/www/html/index.html
+  environment:
+    name: staging
+    url: http://staging.example.com
+
+deploy-production:
+  stage: deploy
+  script:
+    - echo "prd , This job deploys something from the $CI_COMMIT_BRANCH branch."
+  when: manual
+  only:
+    - master
+
