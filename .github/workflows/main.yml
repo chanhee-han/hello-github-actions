@@ -12,5 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: ./action-a
+        id: hello
         with:
           MY_NAME: "Mona"
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
