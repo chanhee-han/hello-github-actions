@@ -1,5 +1,6 @@
 name: Manually triggered workflow
 on:
+  on: [push]
   workflow_dispatch:
     inputs:
       name:
@@ -19,4 +20,3 @@ jobs:
           echo "Hello ${{ github.event.inputs.name }}!"
           echo "- in ${{ github.event.inputs.home }}!"
 
-          
