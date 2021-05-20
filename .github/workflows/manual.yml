@@ -1,24 +1,22 @@
-name: CI + CD
-
+name: Manually triggered workflow
 on:
-  push:
-    branches: [ manual ]
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'     
+      name:
+        description: 'Person to greet'
         required: true
-        default: 'warning'
-      tags:
-        description: 'Test scenario tags'  
+        default: 'Mona the Octocat'
+      home:
+        description: 'location'
+        required: false
+        default: 'The Octoverse'
 
 jobs:
-  Build:
+  say_hello:
     runs-on: ubuntu-latest
     steps:
-#      - uses: actions/checkout@v2
-#      - name: Compile
-#        run: echo Hello, world!
       - run: |
-        echo "Log level: ${{ github.event.inputs.logLevel }}"
-        echo "Tags: ${{ github.event.inputs.tags }}" 
+          echo "Hello ${{ github.event.inputs.name }}!"
+          echo "- in ${{ github.event.inputs.home }}!"
+
+          
