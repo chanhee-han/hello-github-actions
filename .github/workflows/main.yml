@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+  
 
 jobs:
   Build:
@@ -15,6 +21,9 @@ jobs:
 
       - name: Compile
         run: echo Hello, world!
+      - run: |
+        echo "Log level: ${{ github.event.inputs.logLevel }}"
+        echo "Tags: ${{ github.event.inputs.tags }}" 
 
   DeployDev:
     name: Deploy to Dev 
