@@ -1,23 +1,23 @@
 name: A workflow for my Hello World file
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: push
+    #  push:
+#    branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
 
 jobs:
-  build:
-    name: Hello world action
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ./action-a
-        id: hello
-        with:
-          MY_NAME: "Mona"
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+#  build:
+#    name: Hello world action
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#      - uses: ./action-a
+#        id: hello
+#        with:
+#          MY_NAME: "Mona"
+#      # Use the output from the `hello` step
+#      - name: Get the output time
+#        run: echo "The time was ${{ steps.hello.outputs.time }}"
         
   dev-check:
     if: ${{ github.ref == 'refs/heads/dev' }}
