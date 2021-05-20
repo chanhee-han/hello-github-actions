@@ -11,7 +11,8 @@ on:
         description: 'Log level'     
         required: true
         default: 'warning'
-  
+      tags:
+        description: 'Test scenario tags'  
 
 jobs:
   Build:
@@ -21,6 +22,7 @@ jobs:
 
       - name: Compile
         run: echo Hello, world!
+
       - run: |
         echo "Log level: ${{ github.event.inputs.logLevel }}"
         echo "Tags: ${{ github.event.inputs.tags }}" 
