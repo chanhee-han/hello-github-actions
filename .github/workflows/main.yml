@@ -28,5 +28,6 @@ jobs:
   dev-check:
     if: ${{ github.ref == 'refs/heads/dev' }}
     runs-on: ubuntu-latest
+    # test
     steps:
       - run: echo "Deploying to dev server on branch $GITHUB_REF"
