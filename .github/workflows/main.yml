@@ -1,36 +1,52 @@
-name: A workflow for my Hello World file
-on: push
-    #  push:
-#    branches: [ main ]
-#  pull_request:
-#    branches: [ main ]
+name: CI + CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-#  build:
-#    name: Hello world action
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Compile
+        run: echo Hello, world!
+
+#  DeployDev:
+#    name: Deploy to Dev 
+#    if: github.event_name == 'pull_request'
+#    needs: [Build]
 #    runs-on: ubuntu-latest
+#    environment: 
+#      name: Development
+#      url: 'http://dev.myapp.com'
 #    steps:
-#      - uses: actions/checkout@v1
-#      - uses: ./action-a
-#        id: hello
-#        with:
-#          MY_NAME: "Mona"
-#      # Use the output from the `hello` step
-#      - name: Get the output time
-#        run: echo "The time was ${{ steps.hello.outputs.time }}"
+#      - name: Deploy
+#        run: echo I am deploying! 
 
-  prd-check:
-    if: ${{ github.ref == 'refs/heads/main' }}
+  DeployStaging:
+    name: Deploy to Staging 
+    if: github.event.ref == 'refs/heads/main'
+    needs: [Build]
     runs-on: ubuntu-latest
-    # test
-    # test
+    environment: 
+      name: Staging
+      url: 'http://staging.example.com/'
     steps:
-      - run: echo "Deploying to main server on branch $GITHUB_REF"
+      - name: Deploy
+        run: echo I am deploying! 
 
-  dev-check:
-    if: ${{ github.ref == 'refs/heads/dev' }}
+  DeployProd:
+    name: Deploy to Production 
+    needs: [DeployStaging]
     runs-on: ubuntu-latest
-    # test
-    # test
+    environment: 
+      name: Production
+      url: 'http://www.myapp.com'
     steps:
-      - run: echo "Deploying to dev server on branch $GITHUB_REF"
+      - name: Deploy
+        run: echo I am deploying! 
