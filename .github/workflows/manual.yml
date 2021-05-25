@@ -3,7 +3,8 @@ on:
   workflow_dispatch:
     inputs:
       name:
-        description: 'Person to greet'
+        #description: 'Person to greet'
+        description: '올 사람'
         required: true
         default: 'Mona the Octocat'
       home:
