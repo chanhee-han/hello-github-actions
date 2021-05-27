@@ -242,7 +242,7 @@ https://docs.gitlab.com/ee/administration/terraform_state.html
 ## Github, Gitlab CICD environments 기능 비교
 gitlab, github environments 기능
 
-### gitlab environments
+### gitlab environments 예제
 environment 를 활용하는 간단한 예제이다. (.gitlab-ci.yml)
 * 사전에 environment 에 staging, production 을 구성한다.
 * 소스코드가 업데이트되면 ubuntu:20.04 docker 컨테이너에서 실행이 되며 staging 은 ssh를 이용하여 자동 배포가 된다.
